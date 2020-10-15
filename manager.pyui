@@ -1,0 +1,143 @@
+[
+  {
+    “nodes” : [
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{31, 44}, {51, 31}}”,
+        “class” : “Switch”,
+        “attributes” : {
+          “frame” : “{{215, 145}, {51, 31}}”,
+          “value” : true,
+          “class” : “Switch”,
+          “name” : “switch1”,
+          “uuid” : “42CD9F61-CB28-486C-9092-64418F45F07F”
+        },
+        “selected” : false
+      },
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{31, 10}, {150, 26}}”,
+        “class” : “Label”,
+        “attributes” : {
+          “name” : “label1”,
+          “alpha” : 1,
+          “frame” : “{{165, 144}, {150, 32}}”,
+          “uuid” : “0239439F-4E50-43E0-914D-D9FFC26D0498”,
+          “class” : “Label”,
+          “alignment” : “left”,
+          “text” : “Control Panel”,
+          “font_size” : 18,
+          “font_name” : “<System>”
+        },
+        “selected” : false
+      },
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{31, 83}, {410, 176}}”,
+        “class” : “TableView”,
+        “attributes” : {
+          “uuid” : “0BB65D54-7BD2-4A24-BC69-AE2C77E6921A”,
+          “editing” : false,
+          “background_color” : “RGBA(1.0, 1.0, 1.0, 1.0)”,
+          “frame” : “{{140, 60}, {200, 200}}”,
+          “data_source_items” : “Row 1\nRow 2\nRow 3”,
+          “data_source_number_of_lines” : 1,
+          “data_source_move_enabled” : true,
+          “data_source_delete_enabled” : true,
+          “data_source_font_size” : 18,
+          “row_height” : 44,
+          “class” : “TableView”,
+          “name” : “queue”,
+          “flex” : “WH”
+        },
+        “selected” : false
+      },
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{90, 267}, {200, 32}}”,
+        “class” : “TextField”,
+        “attributes” : {
+          “name” : “url”,
+          “frame” : “{{140, 144}, {200, 32}}”,
+          “spellchecking_type” : “default”,
+          “class” : “TextField”,
+          “uuid” : “FFFB112B-E848-4A1A-961C-4D9D46F0F561”,
+          “alignment” : “left”,
+          “autocorrection_type” : “default”,
+          “font_size” : 17,
+          “font_name” : “<System>”
+        },
+        “selected” : false
+      },
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{298, 267}, {80, 32}}”,
+        “class” : “Button”,
+        “attributes” : {
+          “action” : “submit()”,
+          “frame” : “{{200, 144}, {80, 32}}”,
+          “title” : “Submit”,
+          “uuid” : “B6CDB0FF-BDF1-49CC-900D-55C983618C16”,
+          “class” : “Button”,
+          “name” : “submit”,
+          “font_size” : 15
+        },
+        “selected” : false
+      },
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{322, 10}, {119, 31}}”,
+        “class” : “Button”,
+        “attributes” : {
+          “action” : “clear()”,
+          “frame” : “{{200, 144}, {80, 32}}”,
+          “title” : “Clear Queue”,
+          “uuid” : “66CCFC45-DE28-4845-80DE-B86B717BFC12”,
+          “class” : “Button”,
+          “name” : “clear”,
+          “font_size” : 15
+        },
+        “selected” : false
+      },
+      {
+        “nodes” : [
+
+        ],
+        “frame” : “{{322, 49}, {119, 29}}”,
+        “class” : “SegmentedControl”,
+        “attributes” : {
+          “action” : “openclose()”,
+          “flex” : “LR”,
+          “segments” : “Open|Closed”,
+          “frame” : “{{180, 146}, {120, 29}}”,
+          “uuid” : “C97916A9-CA43-4078-B0E2-50B7A91DFE9C”,
+          “class” : “SegmentedControl”,
+          “name” : “toggle_submissions”
+        },
+        “selected” : false
+      }
+    ],
+    “frame” : “{{0, 0}, {480, 320}}”,
+    “class” : “View”,
+    “attributes” : {
+      “enabled” : true,
+      “background_color” : “RGBA(1.000000,1.000000,1.000000,1.000000)”,
+      “tint_color” : “RGBA(0.000000,0.478000,1.000000,1.000000)”,
+      “border_color” : “RGBA(0.000000,0.000000,0.000000,1.000000)”,
+      “flex” : “”
+    },
+    “selected” : false
+  }
+]

@@ -1,10 +1,8 @@
 # Python 3 server example
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import subprocess
-import operator
 import glob
-from stat import ST_CTIME
-import os, sys, time
+import os
+import subprocess
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 hostName = "0.0.0.0"
 serverPort = 8000
@@ -36,7 +34,7 @@ def execute_search(term):
         latest_file = max(list_of_files, key=os.path.getctime)
         return latest_file
     except ValueError:
-        #No MP3 files exist
+        # No MP3 files exist
         print("youtube-dl failed!")
         return "ERROR"
 

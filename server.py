@@ -1,6 +1,5 @@
 # Python 3 server example
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import time
 import subprocess
 
 hostName = "0.0.0.0"
@@ -12,7 +11,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        term=parse_sanatize(self.path.split("/")[1])
+        term = parse_sanitize(self.path.split("/")[1])
         self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
         self.wfile.write(bytes("<p>Request: %s</p>" % term, "utf-8"))
         self.wfile.write(bytes("<body>", "utf-8"))
@@ -21,19 +20,23 @@ class MyServer(BaseHTTPRequestHandler):
         execute_search(term)
         # subprocess.run(["aplay", "anime/wav/"+self.path.split("/")[1]])
 
+
 def execute_search(term):
-	p = subprocess.Popen(
-            "yyoutube-dl -x --audio-format mp3 \"ytsearch1:"+term+"\"",
-            stdout=subprocess.PIPE, shell=True)
-	output = p.communicate()
-	return output
-	
-def parse_sanatize(http_input):
-	parsed = http_input.swap(" ","_")
-	return parsed
+    p = subprocess.Popen(
+        "youtube-dl -x --audio-format mp3 \"ytsearch1:" + term + "\"",
+        stdout=subprocess.PIPE, shell=True)
+    output = p.communicate()
+    return output
+
+
+def parse_sanitize(http_input):
+    parsed = http_input.swap(" ", "_")
+    return parsed
+
 
 def play_music():
-	pass
+    pass
+
 
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)

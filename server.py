@@ -28,7 +28,7 @@ class MyServer(BaseHTTPRequestHandler):
 
 def execute_search(term):
     p = subprocess.Popen(
-        "youtube-dl -x --audio-format mp3 \"ytsearch1:" + term + "\"",
+        "youtube-dl -x --verbose \"ytsearch1:" + term + "\"",
         stdout=subprocess.PIPE, shell=True)
     p.communicate()  # has output for debugging
     try:
@@ -42,7 +42,7 @@ def execute_search(term):
 
 
 def parse_sanitize(http_input):
-    parsed = http_input.swap(" ", "_")
+    parsed = http_input.replace("_", " ")
     return parsed
 
 

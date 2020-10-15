@@ -4,11 +4,32 @@ import os
 import subprocess
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from mutagen.wave import WAVE
-
+import datetime
+import threading
+import time
 
 hostName = "0.0.0.0"
 serverPort = 8000
+my_queue = []
 
+class ThreadingQueue(object):
+    def __init__(self, interval=1):
+        self.interval = interval
+
+        thread = threading.Thread(target=self.run, args=())
+        thread.daemon = True
+        thread.start()
+
+    def run(self):
+        while True:
+            # More statements comes here
+            print(datetime.datetime.now().__str__() + ' : Start task in the background')
+            for i in my_queue:
+                play_music(i)
+
+            time.sleep(self.interval)
+
+tr = ThreadingQueue()
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -22,8 +43,9 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
         music_file = execute_search(term)
-        subprocess.run(['killall', '-9', 'aplay'])
-        play_music(music_file)
+        my_queue.append(music_file)
+        # subprocess.run(['killall', '-9', 'aplay'])
+        # play_music(music_file)
         #
 
 
@@ -47,17 +69,9 @@ def parse_sanitize(http_input):
     return parsed
 
 
-def handle_queue():
-    while 1 == 1:
-        if time_elapsed > WAV(i).info.length:
-            for i in queue():
-                play_music(i)
-                queue.remove(i)
-                time_elapsed = 0
-                break
-
 def play_music(file):
-    subprocess.Popen(["aplay", file, "&"])
+    subprocess.Popen(["aplay", file])
+
 
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)

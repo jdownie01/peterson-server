@@ -23,7 +23,7 @@ class ThreadingQueue(object):
     def run(self):
         while True:
             # More statements comes here
-            print(datetime.datetime.now().__str__() + ' : Start task in the background')
+            print(my_queue)
             for i in my_queue:
                 play_music(i)
 
@@ -70,7 +70,7 @@ def parse_sanitize(http_input):
 
 
 def play_music(file):
-    subprocess.Popen(["aplay", file])
+    subprocess.run(["aplay", file])
 
 
 if __name__ == "__main__":

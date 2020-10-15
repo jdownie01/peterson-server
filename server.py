@@ -37,6 +37,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         term = parse_sanitize(self.path.split("/")[1])
+        print(term)
         self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
         self.wfile.write(bytes("<p>Request: %s</p>" % term, "utf-8"))
         self.wfile.write(bytes("<body>", "utf-8"))

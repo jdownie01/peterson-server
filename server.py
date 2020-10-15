@@ -18,7 +18,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
         p = subprocess.Popen(
-            "youtube-dl https://www.youtube.com/results?search_query=" + self.path.split("/")[1] + "&page=1",
+            "yyoutube-dl -x --audio-format mp3 \"ytsearch1:"+self.path.split("/")[1]+"\"",
             stdout=subprocess.PIPE, shell=True)
         output = p.communicate()
         print(output)

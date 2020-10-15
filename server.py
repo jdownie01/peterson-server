@@ -6,6 +6,7 @@ import subprocess
 hostName = "0.0.0.0"
 serverPort = 8000
 
+
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -16,25 +17,28 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("<body>", "utf-8"))
         self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
-        p = subprocess.Popen("youtube-dl https://www.youtube.com/results?search_query="self.path.split("/")[1]+"&page=1", stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen(
+            "youtube-dl https://www.youtube.com/results?search_query=" + self.path.split("/")[1] + "&page=1",
+            stdout=subprocess.PIPE, shell=True)
         output = p.communicate()
         print(output)
-        #subprocess.run(["aplay", "anime/wav/"+self.path.split("/")[1]])
+        # subprocess.run(["aplay", "anime/wav/"+self.path.split("/")[1]])
 
-if __name__ == "__main__":        
+
+if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)
     print("Server started http://%s:%s" % (hostName, serverPort))
 
-    while 1==1:
+    while 1 == 1:
         try:
             webServer.serve_forever()
         except KeyboardInterrupt:
             pass
             x = input("Please enter a command: ")
             if x == "p":
-                subprocess.run(['killall','-9','aplay'])
+                subprocess.run(['killall', '-9', 'aplay'])
             else:
                 break;
-        
+
     webServer.server_close()
     print("Server stopped.")

@@ -20,6 +20,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
         music_file = execute_search(term)
+        subprocess.run(['killall', '-9', 'aplay'])
         play_music(music_file)
         #
 

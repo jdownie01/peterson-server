@@ -26,7 +26,7 @@ class MyServer(BaseHTTPRequestHandler):
 
 def execute_search(term):
     p = subprocess.Popen(
-        "youtube-dl -x --audio-format mp3 --verbose \"ytsearch1:" + term + "\"",
+        "youtube-dl -x --audio-format wav --verbose \"ytsearch1:" + term + "\"",
         stdout=subprocess.PIPE, shell=True)
     p.communicate()  # has output for debugging
     try:

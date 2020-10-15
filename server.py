@@ -3,6 +3,8 @@ import glob
 import os
 import subprocess
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from mutagen.wave import WAVE
+
 
 hostName = "0.0.0.0"
 serverPort = 8000
@@ -45,9 +47,17 @@ def parse_sanitize(http_input):
     return parsed
 
 
+def handle_queue():
+    while 1 == 1:
+        if time_elapsed > WAV(i).info.length:
+            for i in queue():
+                play_music(i)
+                queue.remove(i)
+                time_elapsed = 0
+                break
+
 def play_music(file):
     subprocess.Popen(["aplay", file, "&"])
-
 
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)

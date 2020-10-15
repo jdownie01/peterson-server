@@ -1,6 +1,10 @@
 # Python 3 server example
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import subprocess
+import operator
+import glob
+from stat import ST_CTIME
+import os, sys, time
 
 hostName = "0.0.0.0"
 serverPort = 8000
@@ -17,16 +21,24 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("<body>", "utf-8"))
         self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
-        execute_search(term)
-        # subprocess.run(["aplay", "anime/wav/"+self.path.split("/")[1]])
+        music_file = execute_search(term)
+        play_music(music_file)
+        #
 
 
 def execute_search(term):
     p = subprocess.Popen(
         "youtube-dl -x --audio-format mp3 \"ytsearch1:" + term + "\"",
         stdout=subprocess.PIPE, shell=True)
-    output = p.communicate()
-    return output
+    p.communicate()  # has output for debugging
+    try:
+        list_of_files = glob.glob('*.mp3')  # * means all if need specific format then *.csv
+        latest_file = max(list_of_files, key=os.path.getctime)
+        return latest_file
+    except ValueError:
+        #No MP3 files exist
+        print("youtube-dl failed!")
+        return "ERROR"
 
 
 def parse_sanitize(http_input):
@@ -34,8 +46,8 @@ def parse_sanitize(http_input):
     return parsed
 
 
-def play_music():
-    pass
+def play_music(file):
+    subprocess.run(["aplay", file])
 
 
 if __name__ == "__main__":

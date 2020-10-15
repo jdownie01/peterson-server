@@ -46,7 +46,7 @@ def parse_sanitize(http_input):
 
 
 def play_music(file):
-    subprocess.run(["aplay", file])
+    subprocess.run(["aplay", file, "&"])
 
 
 if __name__ == "__main__":

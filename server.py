@@ -35,7 +35,6 @@ def parse_sanatize(http_input):
 def play_music():
 	pass
 
-
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)
     print("Server started http://%s:%s" % (hostName, serverPort))

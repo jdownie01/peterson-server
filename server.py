@@ -1,4 +1,4 @@
-# Python 3 server example
+# Python 3 peterson HTTPS server
 import glob
 import os
 import subprocess
@@ -35,10 +35,11 @@ tr = ThreadingQueue()
 
 
 class MyServer(BaseHTTPRequestHandler):
-    def do_get(self):
+    def do_GET(self):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
+        # TODO: Change request term to include password.
         term = parse_sanitize(self.path.split("/")[1])
         self.wfile.write(bytes("<html><head><title>Peterson Server</title></head>", "utf-8"))
         self.wfile.write(bytes("<p>Request: %s</p>" % term, "utf-8"))
@@ -57,11 +58,18 @@ class MyServer(BaseHTTPRequestHandler):
 
 
 def execute_search(term):
+    """
+    Executes a search via youtube-dl
+
+    :param term: the search term
+    :return: the latest edited file, currently the best way to determine the newly created file
+    """
     p = subprocess.Popen(
         "youtube-dl -x --audio-format wav --verbose \"ytsearch1:" + term + "\"",
         stdout=subprocess.PIPE, shell=True)
     p.communicate()  # has output for debugging
     try:
+        # FIXME: If term isn't properly sanitized then this can be used to execute malicious files
         list_of_files = glob.glob('*.wav')  # * means all if need specific format then *.csv
         latest_file = max(list_of_files, key=os.path.getctime)
         return latest_file
@@ -72,12 +80,30 @@ def execute_search(term):
 
 
 def parse_sanitize(http_input):
+    """
+    Sanitizes input strings
+
+    :param http_input: the input to be sanitized
+    :return: the now sanitized input
+    """
     parsed = http_input.replace("_", " ")
     return parsed
 
 
 def play_music(file):
-    subprocess.run(["aplay", file])
+    """
+    Plays the requested music file using aplay
+
+    :param file: the file to be played
+    """
+    if file.split(".")[1] == "wav":
+        if os.path.exists(file):
+            subprocess.run(["aplay", file])
+        else:
+            # TODO: Implement Logger
+            raise FileNotFoundError
+    else:
+        raise TypeError
 
 
 if __name__ == "__main__":

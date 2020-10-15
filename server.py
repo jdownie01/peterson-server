@@ -30,7 +30,7 @@ def execute_search(term):
         stdout=subprocess.PIPE, shell=True)
     p.communicate()  # has output for debugging
     try:
-        list_of_files = glob.glob('*.mp3')  # * means all if need specific format then *.csv
+        list_of_files = glob.glob('*.wav')  # * means all if need specific format then *.csv
         latest_file = max(list_of_files, key=os.path.getctime)
         return latest_file
     except ValueError:

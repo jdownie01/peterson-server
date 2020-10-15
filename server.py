@@ -2,15 +2,14 @@
 import glob
 import os
 import subprocess
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from mutagen.wave import WAVE
-import datetime
 import threading
 import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 hostName = "0.0.0.0"
 serverPort = 8000
 my_queue = []
+
 
 class ThreadingQueue(object):
     def __init__(self, interval=1):
@@ -23,28 +22,36 @@ class ThreadingQueue(object):
     def run(self):
         while True:
             # More statements comes here
-            print(my_queue)
+            # print(my_queue)
             for i in my_queue:
                 play_music(i)
+                my_queue.remove(i)
+                # TODO: Delete file from server.
 
             time.sleep(self.interval)
 
+
 tr = ThreadingQueue()
 
+
 class MyServer(BaseHTTPRequestHandler):
-    def do_GET(self):
+    def do_get(self):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
         term = parse_sanitize(self.path.split("/")[1])
-        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        self.wfile.write(bytes("<html><head><title>Peterson Server</title></head>", "utf-8"))
         self.wfile.write(bytes("<p>Request: %s</p>" % term, "utf-8"))
         self.wfile.write(bytes("<body>", "utf-8"))
-        self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
+        self.wfile.write(bytes("<b> QUEUE </b>", "utf-8"))
+        for i in my_queue:
+            self.wfile.write(bytes("<p>" + i + "</p>", "utf-8"))
         self.wfile.write(bytes("</body></html>", "utf-8"))
-        music_file = execute_search(term)
-        my_queue.append(music_file)
-        # subprocess.run(['killall', '-9', 'aplay'])
+        if term != "skip":
+            music_file = execute_search(term)
+            my_queue.append(music_file)
+        else:
+            subprocess.run(['killall', '-9', 'aplay'])
         # play_music(music_file)
         #
 
@@ -86,7 +93,7 @@ if __name__ == "__main__":
             if x == "p":
                 subprocess.run(['killall', '-9', 'aplay'])
             else:
-                break;
+                break
 
     webServer.server_close()
     print("Server stopped.")

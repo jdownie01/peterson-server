@@ -1,4 +1,4 @@
-# Python 3 peterson HTTPS server
+# Python 3 server example
 import glob
 import os
 import subprocess
